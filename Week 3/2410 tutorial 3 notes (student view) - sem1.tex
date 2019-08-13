@@ -1,0 +1,213 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{ulem}
+\usepackage{bm}
+\usepackage{framed}
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage{color}
+\graphicspath{ {images/} }
+\setlength{\parskip}{1em}
+\allowdisplaybreaks
+
+\usepackage{titling}
+\newcommand{\subtitle}[1]{%
+	\posttitle{%
+		\par\end{center}
+	\begin{center}\large#1\end{center}
+	\vskip0.5em}%
+}
+
+\newenvironment{blueframed}[1][blue]
+{\def\FrameCommand{\fboxsep=\FrameSep\fcolorbox{#1}{white}}%
+	\MakeFramed {\advance\hsize-\width \FrameRestore}}
+{\endMakeFramed}
+
+
+\title{Tutorial 3}
+\author{Quang Bui}
+\subtitle
+{
+	\textbf{keywords}: covariance, expected value, diversification, variance, risk, vector, matrix
+	
+	\textbf{estimated reading time}: 30 minutes
+}
+\date{March 12, 2018}
+
+\begin{document}
+	
+\maketitle
+
+\newpage
+\section*{Question 1}
+\textcolor{red}{\underline{Covariance of two random variables $X$ and $Y$}}
+
+\noindent (Discuss in class)
+
+\newpage
+\section*{Question 2}
+\textcolor{red}{\underline{Diversification in everyday life}}
+
+\noindent \textcolor{red}{Most pokie machines give you the option of multiplying your bet up. For example,}
+\noindent \textcolor{red}{
+	\begin{itemize}
+	\item If the machine accepts 25 cents per round for having a go at winnings given by the random variable $X$...
+	\item ...you also have the option of paying \$1 to scale up your winnings to $4X$
+\end{itemize}
+}
+\noindent \textcolor{red}{Farshid's Mum, who is a 98 year old lady with primary school education and loves pokie machines, told him,}
+\noindent \textcolor{red}{\begin{center}
+		``people who scale their bets up are silly because they are at risk of running out of money faster"
+	\end{center}
+}
+\noindent \textcolor{red}{Suppose you have \$1 only. Compare the expected return and risk of using all of your money at once and betting $4X$, with using it for playing $X$ four times (i.e. $X_1+X_2+X_3+X_4$, where $X_i$ are independent and have distributions identical to $X$). Do you agree with Farshid's Mum? Discuss.}
+
+\noindent The expected return of betting \$1 all at once,
+\begin{align*}
+E(4X)&=4E(X) \\
+&=4\mu \\
+\end{align*}
+\noindent and the risk of betting \$1 all at once (variance is a measure of risk),
+\begin{align*}
+Var(4X)&=16Var(X) \\
+&=16\sigma^2
+\end{align*}
+
+\noindent The expected return of betting 25 cents four times,
+\begin{align*}
+E(X_1+X_2+X_3+X_4)&=E(X_1)+E(X_2)+E(X_3)+E(X_4) \\
+&=\mu+\mu+\mu+\mu \\
+&=4\mu
+\end{align*}
+\noindent and the risk of betting 25 cents four times,
+\begin{align*}
+Var(X_1+X_2+X_3+X_4)&=Var(X_1)+Var(X_2)+Var(X_3)+Var(X_4) \\
+&+cov(X_1,X_2)+cov(X_1,X_3)+\dots+cov(\dots,\dots)  \\
+&=\sigma^2+\sigma^2+\sigma^2+\sigma^2+0+0+\dots+0 \\
+&=4\sigma^2
+\end{align*}
+\noindent Farshid's Mum is right! Both strategies have the same expected return but betting \$1 has a much larger risk. 
+
+\newpage
+\section*{Question 3}
+\textcolor{red}{\underline{Diversification in econometrics and statistics}}
+
+\noindent \textcolor{red}{Suppose we are interested in estimating the mean of a random variable $X$,}
+\noindent $$population\ mean\ of\ X = \mu$$
+\noindent $$we\ want\ to\ estimate\ the\ population\ mean\ of\ X$$
+\noindent \textcolor{red}{We have two estimators for the mean,}
+\noindent \textcolor{black}{\begin{itemize}
+		\item Estimator 1 $(\tilde{\mu})$: The formula of Estimator 1 is given by, $$\tilde{\mu} = X$$  $X$ is the random variable and this estimator takes one observation from the random variable $X$ and uses this as the estimate of $\mu$. 
+		\item Estimator 2 $(\hat{\mu})$: The formula of Estimator 2 is given by, $$\hat{\mu} = \dfrac{X_1+X_2+X_3+X_4}{4}$$ It takes random sample of 4 observations from the random variable $X$, then averages them and uses this as the estimate of $\mu$. A random sample of 4 observations can be denote by $\{X_1,X_2,X_3,X_4\}$. 
+\end{itemize}}
+\noindent \textcolor{red}{What is the expected value of each of these estimators and which one is safer (i.e. less risky)? Discuss the similarity of this to Farshid's Mum's Theorem.}
+
+\noindent The expected value and variance of Estimator 1,
+\begin{align*}
+E(\tilde{\mu}) &= E(X) = \mu \\
+Var(\tilde{\mu}) &= Var(X) = \sigma^2
+\end{align*}
+\noindent The expected value and variance of Estimator 2, 
+\begin{align*}
+E(\hat{\mu}) &= E\Big(\dfrac{X_1+X_2+X_3+X_4}{4}\Big) \\
+&= \dfrac{1}{4}E(X_1+X_2+X_3+X_4) \\
+&= \dfrac{1}{4} E(X_1)+E(X_2)+E(X_3)+E(X_4)\\
+&= \dfrac{1}{4} \times 4\mu \\
+&=\mu \\
+Var(\hat{\mu}) &= Var(\bar{X}) \\
+&= Var\Big(\dfrac{X_1+X_2+X_3+X_4}{4}\Big) \\
+&=\dfrac{1}{16}Var(X_1+X_2+X_3+X_4) \\
+&= \dfrac{1}{16}[Var(X_1)+Var(X_2)+Var(X_3)+Var(X_4) \\
+&+cov(X_1,X_2)+cov(X_1,X_3)+\dots+cov(\dots,\dots)] \\
+&= \dfrac{1}{16}[Var(X_1)+Var(X_2)+Var(X_3)+Var(X_4) + 0 + 0 + \dots + 0] \\
+&= \dfrac{1}{16}[\sigma^2+\sigma^2+\sigma^2+\sigma^2] \\
+&= \dfrac{\sigma^2}{4}
+\end{align*}
+\noindent Both estimators have the same expected value $E(X) = E(\bar{X}) = \mu$ but the 2nd estimator (average of 4 observations) is less risky $Var(X) = \sigma^2 > Var(\bar{X}) = \dfrac{\sigma^2}{4}$.
+
+\noindent This is very similar to Farshid's Mum's Theorem. There we were comparing 4X and $(X_1+X_2+X_3+X_4)$, here we are comparing X and $\dfrac{1}{4}(X_1+X_2+X_3+X_4)$. Same principle: it is safer to diversity and not depend only on a single draw from the distribution.
+
+
+\newpage
+\section*{Question 4}
+\textcolor{red}{\underline{Diversification in finance}}
+
+\noindent \textcolor{red}{Suppose we have invested 60\% of our money in shares of company 1 which have mean return of 10\% and standard deviation of 20\% and the remaining 40\% in share of company 2 that have mean return of 15\% and standard deviation of 25\%. The correlation coefficient between these returns is -0.1. Compute the mean and the standard deviation of this portfolio. Show your work.}
+
+\noindent Let,
+\begin{align*}
+X&: portfolio\ return \\
+C1&: company\ 1's\ return \\
+C2&: company\ 2's\ return
+\end{align*}
+\noindent Therefore our portfolio return is given by,
+$$X=0.6C1 + 0.4C2$$
+\noindent The expected value and standard deviation of our portfolio return,
+\begin{align*}
+E(X)&=E(0.6C1 + 0.4C2) \\
+&= 0.6E(C1) + 0.4E(C2) \\
+&= 0.6\times 10 + 0.4\times 15 \\
+&= 12\% \\
+Var(X)&=Var(0.6C1 + 0.4C2) \\
+&= 0.6^2Var(C1) + 0.4^2Var(C2) + 2\times 0.6\times 0.4[Cov(C1,C2)] \\
+&= 0.6^2Var(C1) + 0.4^2Var(C2) + 2\times 0.6\times 0.4[Corr(C1,C2)\times SD(C1) \times SD(C2)] \\
+&= 0.6^220^2 + 0.4^225^2 + 2\times 0.6\times 0.4[\times (-0.1)\times 20 \times 25] \\
+&= 0.6^220^2 + 0.4^225^2 + 2\times 0.6\times 0.4[-50] \\
+&= 220 \\
+&\implies SD(X) = \sqrt{Var(X)} = \sqrt{220} = 14.8\%
+\end{align*}
+\noindent This portfolio has a higher expected return and a smaller risk than holding the shares of C1.
+
+\newpage
+\section*{Question 5}
+\textcolor{red}{\underline{Vectors and matrices and how they make our lives simpler}}
+
+\noindent \textcolor{red}{An investment portfolio is an weighted average of assets that we have invested in. For example, suppose we have invested:} 
+\noindent \textcolor{red}{\begin{itemize}
+		\item 10\% of our savings in Qantas shares
+		\item 40\% in BHP shares
+		\item 20\% in Telstra shares
+		\item 30\% in Wesfarmers shares
+\end{itemize}}
+\noindent \textcolor{red}{The returns of these shares are random variables. Let's denote each of these returns by the first letter of the company name. If we denote the return to our portfolio by $X$, we can write:$$X = 0.10Q+0.40B+0.20T+0.30W$$ Of course this is only a simple made up example. In reality, the portfolios that investment managers manage include a large number of assets. We can use vectors to show this portfolio in a simple way, and more importantly to use vector arithmetic to compute its return. Consider the following two vectors:{$$\underset{4\times1}{\textbf{p}}
+		=
+		\begin{bmatrix}
+		0.1 \\
+		0.4 \\
+		0.2 \\
+		0.3
+		\end{bmatrix} , 
+		\underset{4\times1}{\textbf{z}}
+		=
+		\begin{bmatrix}
+		Q \\
+		B \\
+		T \\
+		W
+		\end{bmatrix}
+		$$}
+\begin{itemize}
+	\item \textbf{p} is the vector of portfolio weights
+	\item \textbf{z} is the vector of assets
+\end{itemize} 
+Using the rules of vector multiplication we can write: $$X = \textbf{p}'\textbf{z}$$ where $\textbf{p}' = \begin{bmatrix}
+0.1 & 0.4 & 0.2 & 0.3
+\end{bmatrix}$, is the transpose of the vector \textbf{p}. Since \textbf{p} is a vector of constants and \textbf{z} is a vector of random variables, we have: $$E(X) = \textbf{p}'E(\textbf{z})$$ So, if we know the mean return of the assets in the portfolio (or we can estimate the mean return from data), then we can arrange them in the vector $E(\textbf{z})$ and then get an estimate of the mean return to this portfolio by vector multiplication. This part does not save us much time, because calculating $$E(X) = 0.10E(Q) + 0.40E(B) + 0.20E(T) + 0.30E(W)$$ does not take much time even with a hand calculator. However, mean return is not the only parameter that we are interested in when investing. We want to know the variance of the portfolio, which measures its risk. For a single random variable $y$ and a constant $c$ we know that $$Var(cy) = c^2Var(y)$$ For a $4\times 1$ vector random variable such as $\textbf{z}$, first we need to form its $4\times 4$ variance matrix (sometimes called the variance-covariance matrix):$$\underset{4\times4}{Var(\textbf{z})}
+=
+\begin{bmatrix}
+Var(Q) & Cov(Q,B) & Cov(Q,T) & Cov(Q,W) \\
+Cov(Q,B) & Var(B) & Cov(B,T) & Cov(B,W) \\
+Cov(Q,T) & Cov(B,T) & Var(T) & Cov(T,W) \\
+Cov(Q,W) & Cov(B,W) & Cov(T,W) & Var(W)
+\end{bmatrix}$$ Note that the diagonal elements of this matrix are variances of each asset return, and the off diagonal elements are covariances between each pair of asset returns. This matrix is symmetric (a symmetric matrix is a square matrix that is equal to its transpose). Then, we have: $$Var(X) = Var(\textbf{p}'\textbf{z}) = \textbf{p}'Var(\textbf{z})\textbf{p}$$ These two formulae for the expected return and variance of return to a portfolio is very easy for a computer to compute. The investment manager can then change the portfolio weights and recompute these to find a portfolio with the highest expected return for a given level of risk, or find a portfolio with the lowest risk for a given expected return. For practice, re-do question 4 by forming the variance-covariance matrix of the two asset returns and then computing the expected return and variance of the return to the portfolios using $\textbf{p}'E(\textbf{z})$ and $\textbf{p}'Var(\textbf{z})\textbf{p}$.}
+
+\noindent (Discuss in class)
+
+
+
+\end{document}

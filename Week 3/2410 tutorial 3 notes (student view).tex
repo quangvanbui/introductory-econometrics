@@ -1,0 +1,287 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ulem}
+\usepackage{bm}
+\usepackage{framed}
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{cancel}
+\graphicspath{ {images/} }
+\setlength{\parskip}{1em}
+\allowdisplaybreaks
+
+
+\usepackage{titling}
+\newcommand{\subtitle}[1]{%
+	\posttitle{%
+		\par\end{center}
+	\begin{center}\large#1\end{center}
+	\vskip0.5em}%
+}
+
+\newenvironment{blueframed}[1][blue]
+{\def\FrameCommand{\fboxsep=\FrameSep\fcolorbox{#1}{white}}%
+\MakeFramed {\advance\hsize-\width \FrameRestore}}
+{\endMakeFramed}
+
+\newenvironment{spmatrix}[1]
+{\def\mysubscript{#1}\mathop\bgroup\begin{bmatrix}}
+{\end{bmatrix}\egroup_{\textstyle\mathstrut\mysubscript}}
+
+
+\title{Tutorial 3}
+\author{Quang Bui}
+\subtitle
+{
+	\textbf{keywords}: covariance, expected value, diversification, variance, risk, vector, matrix
+	
+	\textbf{estimated reading time}: 30 minutes
+}
+\date{August 5, 2018}
+
+\begin{document}
+	
+\maketitle
+
+\section*{Question 1}
+\textcolor{red}{\underline{Covariance of two random variables $X$ and $Y$}}
+
+\noindent \textcolor{red}{$X$ and $Y$ are random variables with mean $\mu_X$ and $\mu_Y$ respectively. The covariance between $X$ and $Y$ is defined as $$Cov(X,Y) = E[(X-\mu_X)(Y-\mu_Y)]$$ Show that: $$Cov(X,Y) = E[(X-\mu_X)Y] = E[X(Y-\mu_Y)] = E(XY) - \mu_X \mu_Y$$ Discuss why we cannot simplify $E(XY) - \mu_X \mu_Y$ further to $E(X)E(Y) - \mu_X \mu_Y = \mu_X \mu_Y - \mu_X \mu_Y = 0$.}
+
+\justify
+\begin{blueframed}
+	\textcolor{blue}{\textbf{Background}}
+	\vspace{-\baselineskip}
+	\justify
+	\textcolor{blue}{\underline{Covariance} \\ \\ The covariance between $X$ and $Y$ is a measure of linear association between them and is define as the expected value of $(X-\mu_X)(Y-\mu_Y)$, $$Cov(X,Y) = E[(X-\mu_X)(Y-\mu_Y)]$$ So, if $X$ is above its mean, is $Y$ more likely to be below or above its mean? \begin{itemize}
+			% draw 4 quadrants on whiteboard, split by the mu_X and mu_Y
+			\item If $X$ is above its mean and $Y$ is above its mean, then $(X-\mu_X)(Y-\mu_Y) > 0$ and this data point falls in quadrant 1.
+			\item If $X$ is below its mean and $Y$ is below its mean, then $(X-\mu_X)(Y-\mu_Y) > 0$ and this data point falls in quadrant 3.
+			\item If $X$ is above its mean and $Y$ is below its mean, then $(X-\mu_X)(Y-\mu_Y) > 0$ and this data point falls in quadrant 4.
+			\item If $X$ is below its mean and $Y$ is above its mean, then $(X-\mu_X)(Y-\mu_Y) > 0$ and this data point falls in quadrant 2.
+		\end{itemize} Since the covariance between $X$ and $Y$ is defined as the expected value (or population average) of $(X-\mu_X)(Y-\mu_Y)$,}
+\end{blueframed}
+
+\justify
+\begin{blueframed}
+	\vspace{-\baselineskip}
+	\justify
+	\textcolor{blue}{\vspace{-\baselineskip}\begin{align*}
+		Cov(X,Y) &= E[(X-\mu_X)(Y-\mu_Y)] \\
+		&= \dfrac{1}{N}\sum_{i=1}^{N}(x_i-\mu_X)(y_i-\mu_Y) \\
+		&= \dfrac{(x_1-\mu_X)(y_1-\mu_Y) + (x_2-\mu_X)(y_2-\mu_Y) + \dots + (x_N-\mu_X)(y_N-\mu_Y)}{N}
+		\end{align*} it then follows that, \begin{itemize}
+			\item If $Cov(X,Y) > 0$, then, on average, when $X$ is above its mean, $Y$ is also above its mean.
+			\item If $Cov(X,Y) < 0$, then, on average, when $X$ is above its mean, $Y$ is below its mean.
+	\end{itemize} The sign of the covariance coefficient is directly interpretable, but the magnitude is not because the covariance depends on the units of measurement of $X$ and $Y$. Scaling the covariance by the standard deviations of the variables eliminates the unit of measurement, and defines the correlation between $X$ and $Y$, $$Corr(X,Y) = \dfrac{Cov(X,Y)}{sd(X)sd(Y)}$$ Unlike the covariance, the correlation must lie between -1 and 1.}
+\end{blueframed}
+\noindent (Discuss in class)
+
+\newpage
+\section*{Question 2}
+\textcolor{red}{\underline{Diversification in everyday life}}
+
+\noindent \textcolor{red}{Most pokie machines give you the option of multiplying your bet up. For example,}
+\noindent \textcolor{red}{
+	\begin{itemize}
+	\item If the machine accepts 25 cents per round for having a go at winnings given by the random variable $X$...
+	\item ...you also have the option of paying \$1 to scale up your winnings to $4X$
+\end{itemize}
+}
+\noindent \textcolor{red}{Farshid's Mum, who is a 98 year old lady with primary school education and loves pokie machines, told him,}
+\noindent \textcolor{red}{\begin{center}
+		``people who scale their bets up are silly because they are at risk of running out of money faster"
+	\end{center}
+}
+\noindent \textcolor{red}{Suppose you have \$1 only. Compare the expected return and risk of using all of your money at once and betting $4X$, with using it for playing $X$ four times (i.e. $X_1+X_2+X_3+X_4$, where $X_i$ are independent and have distributions identical to $X$). Do you agree with Farshid's Mum? Discuss.}
+\justify
+\begin{blueframed}
+	\textcolor{blue}{\textbf{Background}}
+	\vspace{-\baselineskip}
+	\justify
+	\textcolor{blue}{\underline{The Expected Value} \begin{itemize}
+			\item For any constant $c$, $E(c) = c$
+			\item For any constants $a$ and $b$, $E(aX + b) = aE(X) + b$
+			\item If $\{a_1, a_2, \dots, a_n\}$ are constants and $\{X_1, X_2, \dots, X_n \}$ are random variables then, $$E(a_1 X_1 + a_2 X_2 + \dots + a_n X_n) = a_1E(X_1) + a_2E(X_2) + \dots + a_nE(X_n)$$
+		\end{itemize} \underline{The Variance} % variance - a number that tells us 'how far X is from mu_X, on average'
+	\begin{itemize}
+		\item For any constant $c$, $Var(c) = 0$
+		\item For any constants $a$ and $b$, $Var(aX + b) = a^2Var(X)$
+		\item For any constants $a$ and $b$, $$Var(aX + bY) = a^2Var(X) + b^2Var(Y) + 2abCov(X,Y)$$
+	\end{itemize}}
+\end{blueframed}
+\begin{align*}
+	X&: winnings\ by\ betting\ 25\ cents \\
+	4X&: winnings\ by\ betting\ \$1 
+\end{align*}
+\noindent Let $E(X) = \mu$ and $Var(X) = \sigma^2$.
+
+\noindent The expected return of betting \$1 all at once,
+\begin{align*}
+	E(4X)&= \\
+	&=
+\end{align*} \noindent and the risk of betting \$1 all at once (variance is a measure of risk),
+\begin{align*}
+Var(4X)&= \\
+&=
+\end{align*} \noindent The expected return of betting 25 cents four times,
+\begin{align*}
+E(X_1+X_2+X_3+X_4)&= \\
+&= \\
+&=
+\end{align*}
+\noindent and the risk of betting 25 cents four times,
+\begin{align*}
+Var(X_1+X_2+X_3+X_4)&= \\
+&= \\
+&=
+\end{align*}
+\noindent Farshid's Mum is right! Both strategies have the same expected return but betting \$1 has a much larger risk. 
+
+\newpage
+\section*{Question 3}
+\textcolor{red}{\underline{Diversification in econometrics and statistics}}
+
+\noindent \textcolor{red}{Suppose we are interested in estimating the mean of a random variable $X$,}
+\noindent $$population\ mean\ of\ X = \mu\ (unknown)$$
+\noindent $$we\ want\ to\ estimate\ \mu$$
+\noindent \textcolor{red}{We have two estimators for $\mu$,}
+\noindent \textcolor{black}{\begin{itemize}
+		\item Estimator 1 $(\tilde{\mu})$: The formula of Estimator 1 is given by, $$\tilde{\mu} = X$$  this estimator takes one observation from the random variable $X$ and uses this as the estimate of $\mu$. 
+		\item Estimator 2 $(\hat{\mu})$: The formula of Estimator 2 is given by, $$\hat{\mu} = \dfrac{X_1+X_2+X_3+X_4}{4} = \bar{X}$$ this estimator takes a random sample of 4 observations from the random variable $X$, then averages them and uses this as the estimate of $\mu$. A random sample of 4 observations can be denote by $\{X_1,X_2,X_3,X_4\}$. 
+	\end{itemize}}
+\noindent \textcolor{red}{What is the expected value of each of these estimators and which one is safer (i.e. less risky)? Discuss the similarity of this to Farshid's Mum's Theorem.}
+
+\noindent The expected value and variance of Estimator 1,
+\begin{align*}
+	E(\tilde{\mu}) &= \\
+	Var(\tilde{\mu}) &=
+\end{align*}
+\noindent The expected value and variance of Estimator 2, 
+\begin{align*}
+E(\hat{\mu}) &=  \\
+&= \\
+&= \\
+&= \\
+Var(\hat{\mu}) &= \\
+&=  \\
+&= \\
+&= \\
+&= 
+\end{align*}
+\noindent Both estimators have the same expected value $E(X) = E(\bar{X}) = \mu$ but the 2nd estimator (average of 4 observations) is less risky $Var(X) = \sigma^2 > Var(\bar{X}) = \dfrac{\sigma^2}{4}$.
+
+\noindent This is very similar to Farshid's Mum's Theorem. There we were comparing 4X and $(X_1+X_2+X_3+X_4)$, here we are comparing X and $\dfrac{1}{4}(X_1+X_2+X_3+X_4)$. Same principle: it is safer to diversity and not depend only on a single draw from the distribution.
+
+\noindent (Covariances equal to 0 because the sample is random, so $X_1, X_2, X_3, and\ X_4$ are unrelated to each other.)
+
+%\newpage
+%\section*{Question 4}
+%\textcolor{red}{\underline{Diversification in finance and vectors \& matrices and %how they make our lives simpler}}
+
+%\noindent \textcolor{red}{Suppose we have invested 60\% of our money in shares of company 1 which have mean return of 10\% and standard deviation of 20\% and the remaining 40\% in share of company 2 that have mean return of 15\% and standard deviation of 25\%. The correlation coefficient between these returns is -0.1. Compute the mean and the standard deviation of this portfolio. Show your work.}
+
+%\noindent Let,
+%\begin{align*}
+%	X&: portfolio\ return \\
+%	C1&: company\ 1's\ return \\
+%	C2&: company\ 2's\ return
+%\end{align*}
+%\noindent Therefore our portfolio return is given by,
+%$$X=0.6C1 + 0.4C2$$
+%\noindent The expected value and standard deviation of our portfolio return,
+%\begin{align*}
+%	E(X)&=E(0.6C1 + 0.4C2) \\
+%	&= 0.6E(C1) + 0.4E(C2) \\
+%	&= 0.6\times 10 + 0.4\times 15 \\
+%	&= 12\% \\
+%	Var(X)&=Var(0.6C1 + 0.4C2) \\
+%	&= 0.6^2Var(C1) + 0.4^2Var(C2) + 2\times 0.6\times 0.4[Cov(C1,C2)] \\
+%	&= 0.6^2Var(C1) + 0.4^2Var(C2) + 2\times 0.6\times 0.4[Corr(C1,C2)\times SD(C1) \times SD(C2)] \\
+%	&= 0.6^220^2 + 0.4^225^2 + 2\times 0.6\times 0.4[\times (-0.1)\times 20 \times 25] \\
+%	&= 0.6^220^2 + 0.4^225^2 + 2\times 0.6\times 0.4[-50] \\
+%	&= 220 \\
+%	&\implies SD(X) = \sqrt{Var(X)} = \sqrt{220} = 14.8\%
+%\end{align*}
+%\noindent This portfolio has a higher expected return and a smaller risk than %holding the shares of C1.
+
+\newpage
+\section*{Question 4}
+\textcolor{red}{\underline{Diversification in finance and vectors \& matrices and how they make our lives simpler}}
+
+\noindent \textcolor{red}{An investment portfolio is as weighted average of assets that we have invested in. For example, suppose we have invested:} 
+\noindent \textcolor{red}{\begin{itemize}
+		\item 20\% of our savings in Qantas shares
+		\item 30\% in Telstra shares
+		\item 50\% in Wesfarmers shares
+\end{itemize}}
+\noindent \textcolor{red}{The returns of these shares are random variables. Let's denote each of these returns by the first letter of the company name. If we denote the return to our portfolio by $X$, we can write:$$X = 0.20Q+0.30T+0.50W$$ Of course this is only a simple made up example. In reality, the portfolios that investment managers manage include a large number of assets. We can use vectors to show this portfolio in a simple way, and more importantly to use vector arithmetic to compute its return. Consider the following two vectors:{$$\underset{3\times1}{\textbf{p}}
+		=
+		\begin{bmatrix}
+		0.2 \\
+		0.3 \\
+		0.5
+		\end{bmatrix} , 
+		\underset{3\times1}{\textbf{z}}
+		=
+		\begin{bmatrix}
+		Q \\
+		T \\
+		W
+		\end{bmatrix}
+		$$}
+\begin{itemize}
+	\item \textbf{p} is the vector of portfolio weights
+	\item \textbf{z} is the vector of assets
+\end{itemize} \vspace{-\baselineskip}
+Using the rules of vector multiplication we can write: $$X = \textbf{p}'\textbf{z}$$ where $\textbf{p}' = \begin{bmatrix}
+0.2 & 0.3 & 0.5
+\end{bmatrix}$, is the transpose of the vector \textbf{p}. Since \textbf{p} is a vector of constants and \textbf{z} is a vector of random variables, we have: $$E(X) = \textbf{p}'E(\textbf{z})$$ So, if we know the mean return of the assets in the portfolio (or we can estimate the mean return from data), then we can arrange them in the vector $E(\textbf{z})$ and then get an estimate of the mean return to this portfolio by vector multiplication. For instance, the estimates of mean (and standard deviation) of monthly returns for these three shares based on monthly observations in the last 8 years are given in the table below:}
+
+%%%%%%%%%% TABLE OBJECT %%%%%%%%%%
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{lrrr}
+		\multicolumn{1}{r}{}&\multicolumn{1}{r}{Q}&\multicolumn{1}{r}{T}&\multicolumn{1}{r}{B}\\
+		\multicolumn{1}{r}{$mean$}&\multicolumn{1}{r}{$1.0$}&\multicolumn{1}{r}{$0.6$}&\multicolumn{1}{r}{$0.8$}\\
+		\multicolumn{1}{r}{$std.\ dev$}&\multicolumn{1}{r}{$9.8$}&\multicolumn{1}{r}{$4.5$}&\multicolumn{1}{r}{$4.6$}\\
+	\end{tabular}
+	%\caption{Add your caption here.}
+	%\label{tab:}
+\end{table}\noindent \textcolor{red}{This part does not save us much time, because calculating $$E(X) = 0.20E(Q) + 0.30E(T) + 0.50E(W)$$ does not take much time even with a hand calculator. However, mean return is not the only parameter that we are interested in when investing. We want to know the variance of the portfolio, which measures its risk. For a single random variable $y$ and a constant $c$ we know that $$Var(cy) = c^2Var(y)$$ For a $3\times 1$ vector random variable such as $\textbf{z}$, first we need to form its $3\times 3$ variance matrix (sometimes called the variance-covariance matrix):$$\underset{3\times3}{Var(\textbf{z})}
+=
+\begin{bmatrix}
+Var(Q) & Cov(Q,T) & Cov(Q,W) \\
+Cov(Q,T) & Var(T) & Cov(T,W) \\
+Cov(Q,W) & Cov(T,W) & Var(W)
+\end{bmatrix}$$ Note that the diagonal elements of this matrix are variances of each asset return, and the off diagonal elements are covariances between each pair of asset returns. This matrix is symmetric (a symmetric matrix is a square matrix that is equal to its transpose). The estimated variance covariance matrix of returns based on the last 8 years of observed returns is given below (all values rounded to make life easier):} 
+
+%%%%%%%%%% TABLE OBJECT %%%%%%%%%%
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{lrrr}
+		\multicolumn{1}{r}{}&\multicolumn{1}{r}{Q}&\multicolumn{1}{r}{T}&\multicolumn{1}{r}{B}\\
+		\multicolumn{1}{r}{$Q$}&\multicolumn{1}{r}{$94$}&\multicolumn{1}{r}{$1$}&\multicolumn{1}{r}{$8$}\\
+		\multicolumn{1}{r}{$T$}&\multicolumn{1}{r}{$1$}&\multicolumn{1}{r}{$20$}&\multicolumn{1}{r}{$5$}\\
+		\multicolumn{1}{r}{$W$}&\multicolumn{1}{r}{$8$}&\multicolumn{1}{r}{$5$}&\multicolumn{1}{r}{$21$}\\
+	\end{tabular}
+	%\caption{Add your caption here.}
+	%\label{tab:}
+\end{table}
+
+\noindent \textcolor{red}{Then, we have: $$Var(X) = Var(\textbf{p}'\textbf{z}) = \textbf{p}'Var(\textbf{z})\textbf{p}$$ Using the information provided above, compute the variance of the portfolio of Qantas, Telstra and Wesfarmers shares given by the portfolio weights \textbf{p}. Compare the risk of this portfolio with the risk of each individual asset. [The practical importance of this exercise in addition to providing an example of the benefit of diversification using real data is that the matrix based formulae for the expected return and variance of return to a portfolio are very easy to compute for a computer, even for portfolios of hundreds of assets. The investment manager can then change the portfolio weights and recompute these to find a portfolio with the highest expected return for a given level of risk, or find a portfolio with the lowest risk for a given expected return.]}
+%For practice, re-do question 4 by forming the variance-covariance matrix of the two asset returns and then computing the expected return and variance of the return to the portfolios using $\textbf{p}'E(\textbf{z})$ and $\textbf{p}'Var(\textbf{z})\textbf{p}$.]
+
+\noindent (Discuss in class)
+
+
+
+\end{document}
